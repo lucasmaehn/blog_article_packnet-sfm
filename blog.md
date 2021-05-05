@@ -10,7 +10,7 @@ Depth Estimation deals with the problem of gaining spatial insights for a given 
 
 * Robotics and Autonomous Driving, where depth estimation is used to give the robot a perception of its 3D environment to prevent it from crashing into objects or enables it to interact with its environment
 * Augmented Reality (AR), where depth estimation is needed to ensure that a virtual object obeys the structure of the scene to make it look natural in its environment
-* Various mapping tasks, where depth estimation can be used to create a 3D map of a given environment (for example during endoscopies [7])
+* Various mapping tasks, where depth estimation can be used to create a 3D map of a given environment (for example during an endoscopy [7])
 
 <div style="width: 50%; display:block; margin: 0 auto; text-align: center; margin-bottom: 30px">
 <img style="margin: 0; padding: 0" src="img/depth-estimation.png">
@@ -20,7 +20,7 @@ Depth Estimation deals with the problem of gaining spatial insights for a given 
 
 ### Methods
 
-Depth Estimation can be implemented using various methods. None of them are perfect though and have their advantages and disadvantages:
+Depth Estimation can be implemented using various methods. None of which are perfect though and have their advantages and disadvantages:
 
 |Solution|PRO's|CON's|
 |---|---|---|
@@ -31,12 +31,12 @@ Depth Estimation can be implemented using various methods. None of them are perf
 
 
 ## Monocular Depth Estimation
-At first glance, estimating depth from a monocular camera setup seems to be a bad idea. The authors of a previous paper [2] even describe it as an ill-posed problem without a second image to triangulate objects using image disparity. This is due to the fact that monocular depth estimation is a very ambiguous task, where depth cues can be misinterpreted, leading to wrong depth estimations. Scenes containing a television (or huge advertisements) could thereby suffer from wrong depth estimations due to monocular depth cues being displayed inside of the screen. 
+At first glance, estimating depth from a monocular camera setup seems to be a bad idea. The authors of a previous paper [2] even describe it as an *"[...] ill-posed problem as there is an extremely large number of possible incorrect depths per pixel [...]"*. This is due to the fact that monocular depth estimation is a very ambiguous task, where depth cues can be misinterpreted, leading to wrong depth estimations. Scenes containing a television (or huge advertisements) could thereby suffer from wrong depth estimations due to monocular depth cues being displayed inside of the screen. 
 But on the other hand, sometimes a stereo camera setup is just not viable due to space constraints or maybe because we want to infer depth from an image that has already been taken without a second image from a different position.
 
 
 ### Supervised Approaches
-The first instinct to tackle a problem like this is framing it as a supervised regression problem, where we use ground truth data (for example from LiDAR Sensors ) to calculate a pixelwise loss for a estimated depth map. In this case, calculating the loss is very straight forward since the estimated depth map just has to be compared to its ground truth counterpart.
+The first instinct to tackle a problem like this is framing it as a supervised regression problem, where we use ground truth data (for example from LiDAR Sensors) to calculate a pixelwise loss for a estimated depth map. In this case, calculating the loss is very straight forward since the estimated depth map just has to be compared to its ground truth counterpart.
 
 Eigen et al. proposed in [3] such an approach, where a multi-scale network was trained on data from RGB-D cameras and the KITTI dataset, which contains image sequences with ground-truth data from LiDAR Sensor. A later paper (DORN) [6], written by Fu et al., proposed to predict a discrete depth map instead of one with continuous depth values, which improved the results of supervised approaches.
 
@@ -84,7 +84,7 @@ In a sequence of images where the camera is in motion, objects depicted in the i
 </div>
 
 To leverage the structure from motion depth-cue Zhou et al. proposed in [5] to concurrently train a depth estimator and a pose estimator on a sequence of images, to not only estimate depth, but to also estimate the camera movement between frames.  
-While the depth estimator outputs a depth map using a target image as input, the pose estimator uses two sequential images (one of them being the target image) as input to estimate a matrix that describes the ego-motion in all 6 degrees of freedom (right/left, up/down, pitch, roll and yaw). 
+While the depth estimator outputs a depth map using a target image as input, the pose estimator uses two sequential images (one of them being the target image) as input to estimate a matrix that describes the ego-motion in all 6 degrees of freedom (forwards/backwards, right/left, up/down, pitch, roll and yaw). 
 
 Combining these two outputs and the second input image to the pose-network (not the target image), the target image can be reconstructed which can, similar to the previous unsupervised approach, be used to calculate a loss by comparing the actual target image with the reconstructed one. This process can be repeated for a variable number of images in the sequence. This results in one reconstructed target image for each context image (images in the sequence, which are not the target image). The loss can then be determined by considering every reconstruction of the target image.
 
@@ -94,7 +94,7 @@ To account for *natural* error, such as pixel occlusions due to motion between f
 <div style="width: 80%; display:block; margin: 0 auto; text-align: center; margin-bottom: 30px">
 <img style="margin: 0; padding: 0" src="img/unsupervised3.png">
 
-<i style="margin: 0; padding: 0">Training Pipeline proposed by Gogard et al. in the Monodepth2 paper [2]</i>
+<i style="margin: 0; padding: 0">Training Pipeline proposed by Godard et al. in the Monodepth2 paper [2]</i>
 </div>
 
 Unsupervised monocular depth estimation still struggles with two problems though: 
@@ -109,7 +109,7 @@ Unsupervised monocular depth estimation still struggles with two problems though
 
 
 ## Contributions of the Paper
-This paper builds on top of previous works in unsupervised monocular depth estimation using structure from motion. By replacing the previous used network architecture for the depth estimator, the authors expect less information loss during the feature encoding and decoding stages of the network. By introducting weak velocity supervision at training time, the authors additionally aim to solve the problem of scale ambiguity for unsupervised monocular depth estimation using the structure from motion approach.
+The paper builds on top of previous works in unsupervised monocular depth estimation using structure from motion. By replacing the previous used network architecture for the depth estimator, the authors expect less information loss during the feature encoding and decoding stages of the network. By introducting weak velocity supervision at training time, the authors additionally aim to solve the problem of scale ambiguity for unsupervised monocular depth estimation using the structure from motion approach.
 
 ### PackNet Architecture
 The model architecture used in previous approaches (a U-Net architecture) was initially intended for image segmentation tasks, which do not depend on encoding spatial information as much as tasks like depth estimation. This is why the authors of this paper proposed a novel network architecture which use packing and unpacking blocks to respectively replace the encoding and decoding stages of the U-Net architecture. The authors claim that using these blocks, the network can more efficiently compress spatial features, which result in less information loss, allowing the network to almost perfectly reproduce input images.
@@ -143,7 +143,7 @@ The authors compared different methods of monocular depth estimation using diffe
 * How does the velocity supervision impact the performance? Can it compete with models that are scaled on ground truth data?
 * How does the method compare to supervised approaches?
 
-To simplify the table, I've cropped out the most interesting rows. Metrics are marked with an error (down = lower is better, up = higher is better):
+To simplify the table, I've cropped out the most interesting rows. Metrics are marked with an arrow (down = lower is better, up = higher is better):
 
 ![](img/quant-eval.png)
 
@@ -159,7 +159,7 @@ The authors also conducted a qualitative evaluation, by comparing different dept
 PackNet subjectively outperforms both Monodepth2 and DORN. One interesting obeservation one can make is that DORN performs poorly at the top half of the image and also has a lot more artifacts than the unsupersived approaches. This might be due to the fact that the used ground truth data often consists of a very sparse point clouds instead of continuous depth maps, which naturally decreases the perfomance of thin and small objects (for Example: poles or traffic signs). Bad performances for the sky in DORN could also be due to limitations of ground truth data. LiDAR, often used to generate training data, cannot generate **any** points in the sky due to range limitations. Thereby the sky, or objects very far away often times become not trainable by supervised approaches relying on LiDAR data.
 
 ### Evaluation of Model Scalability
-The last very interesting experiment, which I want to display deals with how the model performs with different numbers of trainanble parameters and input resolution.
+The last very interesting experiment, which I want to display, deals with how the model performs with different numbers of trainanble parameters and input resolution.
 
 ![](img/scale-eval.png)
 
@@ -169,7 +169,7 @@ This experiment shows three very interesting things:
 3. The measured inference time is < 60ms in quite large implementations of the PackNet model. The authors infer that the model is thereby able to run in realtime. One thing to keep in mind here is that the used GPU is very powerful. It would be nice to compare the inference time on a low end GPU.
 
 ## Conclusion
-This paper proposes serious improvements on top of previous work. By introducing a novel loss function that leverages ubiqutous velocity measurements a crucial problem of unsupervised monocular depth estimation is solved. Additionally, due to the new network architecture which is able to better leverage high resolution data, the proposed method is able to outperform the previous state of the art, producing finer details in the generated depth maps and decreasing the performance gap between supervised and unsupervised approaches.
+The paper proposes serious improvements on top of previous work. By introducing a novel loss function that leverages ubiqutous velocity measurements a crucial problem of unsupervised monocular depth estimation is solved. Additionally, due to the new network architecture which is able to better leverage high resolution data, the proposed method is able to outperform the previous state of the art, producing finer details in the generated depth maps and decreasing the performance gap between supervised and unsupervised approaches.
 
 ## References
 [1] Vitor Guizlini, Rareș Ambruș, Sundeep Pillai, Allan Raventos and Adrien Gaidon. *3D Packing for Self-Supervised Monocular Depth Estimation.* In CVPR, 2020.
@@ -185,4 +185,4 @@ This paper proposes serious improvements on top of previous work. By introducing
 
 [6] Huan Fu, Mingming Gong, Chaohui Wang, Kayhan Batmanghelich, and Dacheng Tao. *Deep ordinal regression network for monocular depth estimation.* Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2018.
 
-[7] https://davidrecasens.github.io/EndoDepthAndMotion/#download-dataset
+[7] David Recasens *Endo Depth and Motion (https://davidrecasens.github.io/EndoDepthAndMotion/#download-dataset)*
