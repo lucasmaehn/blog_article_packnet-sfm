@@ -13,8 +13,9 @@ Depth Estimation deals with the problem of gaining spatial insights for a given 
 * Various mapping tasks, where depth estimation can be used to create a 3D map of a given environment (for example during endoscopies [7])
 
 <div style="width: 50%; display:block; margin: 0 auto; text-align: center; margin-bottom: 30px">
-    <img style="margin: 0; padding: 0" src="img/depth-estimation.png">
-    <i style="margin: 0; padding: 0">An example depth map from [1]</i>
+<img style="margin: 0; padding: 0" src="img/depth-estimation.png">
+
+<i style="margin: 0; padding: 0">An example depth map from [1]</i>
 </div>
 
 ### Methods
@@ -53,8 +54,9 @@ As mentioned earlier, a stereo camera depth estimator is more or less a determin
 
 
 <div style="width: 50%; display:block; margin: 0 auto; text-align: center; margin-bottom: 30px">
-    <img style="margin: 0; padding: 0" src="img/unsupervised2.png">
-    <i style="margin: 0; padding: 0">Image disparity visualized </i>
+<img style="margin: 0; padding: 0" src="img/unsupervised2.png">
+
+<i style="margin: 0; padding: 0">Image disparity visualized </i>
 </div>
 
 
@@ -63,8 +65,9 @@ Using one image as input (for example the left image) a pixelwise disparity map 
 
 
 <div style="width: 50%; display:block; margin: 0 auto; text-align: center; margin-bottom: 30px">
-    <img style="margin: 0; padding: 0" src="img/unsupervised1.png">
-    <i style="margin: 0; padding: 0">Training Pipeline proposed by Gogard et al. in [4]</i>
+<img style="margin: 0; padding: 0" src="img/unsupervised1.png">
+
+<i style="margin: 0; padding: 0">Training Pipeline proposed by Gogard et al. in [4]</i>
 </div>
 
 This loss calculation is pretty interesting, but it still uses two cameras at training time and the loss function is based on a binocular depth cue: stereopsis (or image disparity).  
@@ -89,8 +92,9 @@ To account for *natural* error, such as pixel occlusions due to motion between f
 
 
 <div style="width: 80%; display:block; margin: 0 auto; text-align: center; margin-bottom: 30px">
-    <img style="margin: 0; padding: 0" src="img/unsupervised3.png">
-    <i style="margin: 0; padding: 0">Training Pipeline proposed by Gogard et al. in the Monodepth2 paper [2]</i>
+<img style="margin: 0; padding: 0" src="img/unsupervised3.png">
+
+<i style="margin: 0; padding: 0">Training Pipeline proposed by Gogard et al. in the Monodepth2 paper [2]</i>
 </div>
 
 Unsupervised monocular depth estimation still struggles with two problems though: 
@@ -98,8 +102,9 @@ Unsupervised monocular depth estimation still struggles with two problems though
 * **Scale Ambiguity**: All unsupervised loss functions are agnostic to a measurement of distance (for example: the metric system), which is why a metrically accurate distance between an object and the observer can not be inferred. Supervised approaches do not suffer from this problem, since they are scaled at training time using their ground truth training data with metrically accurate labels. To overcome this problem unsupervised approaches usually have to be scaled at test time using ground truth labeled data.
 
 <div style="width: 50%; display:block; margin: 0 auto; text-align: center; margin-bottom: 30px">
-    <img style="margin: 0; padding: 0" src="img/unsupervised4.png">
-    <i style="margin: 0; padding: 0">Infinite Depth Problem <br> Source: https://ai.googleblog.com/2018/11/a-structured-approach-to-unsupervised.html</i>
+<img style="margin: 0; padding: 0" src="img/unsupervised4.png">
+
+<i style="margin: 0; padding: 0">Infinite Depth Problem <br> Source: https://ai.googleblog.com/2018/11/a-structured-approach-to-unsupervised.html</i>
 </div>
 
 
@@ -110,8 +115,9 @@ This paper builds on top of previous works in unsupervised monocular depth estim
 The model architecture used in previous approaches (a U-Net architecture) was initially intended for image segmentation tasks, which do not depend on encoding spatial information as much as tasks like depth estimation. This is why the authors of this paper proposed a novel network architecture which use packing and unpacking blocks to respectively replace the encoding and decoding stages of the U-Net architecture. The authors claim that using these blocks, the network can more efficiently compress spatial features, which result in less information loss, allowing the network to almost perfectly reproduce input images.
 
 <div style="width: 50%; display:block; margin: 0 auto; text-align: center; margin-bottom: 30px">
-    <img style="margin: 0; padding: 0" src="img/packnet1.png">
-    <i style="margin: 0; padding: 0">Proposed Packing/Unpacking Blocks from [1]</i>
+<img style="margin: 0; padding: 0" src="img/packnet1.png">
+
+<i style="margin: 0; padding: 0">Proposed Packing/Unpacking Blocks from [1]</i>
 </div>
 
 
@@ -121,8 +127,9 @@ Velocity sensors are ubiqutous in the field of robotics. Even phones have some k
 By comparing the magnitude of the pose estimation network output matrix to the given velocity and the elapsed time between the two input frames, a metric scale can be introduced to the pose network. Because of the global photometric loss, which depends on the pose matrix, this scale awareness also propagates to the depth estimation network.
 
 <div style="width: 50%; display:block; margin: 0 auto; text-align: center; margin-bottom: 30px">
-    <img style="margin: 0; padding: 0" src="img/velocity-loss.png">
-    <i style="margin: 0; padding: 0">Velocity loss function proposed in [1]</i>
+<img style="margin: 0; padding: 0" src="img/velocity-loss.png">
+
+<i style="margin: 0; padding: 0">Velocity loss function proposed in [1]</i>
 </div>
 
 ## Experiments and Discussion
