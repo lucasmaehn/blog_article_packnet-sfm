@@ -185,4 +185,4 @@ The paper proposes serious improvements on top of previous work. By introducing 
 
 [6] Huan Fu, Mingming Gong, Chaohui Wang, Kayhan Batmanghelich, and Dacheng Tao. *Deep ordinal regression network for monocular depth estimation.* Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2018.
 
-[7] David Recasens *Endo Depth and Motion (https://davidrecasens.github.io/EndoDepthAndMotion/#download-dataset)*
+[7] David Recasens. *Endo Depth and Motion (https://davidrecasens.github.io/EndoDepthAndMotion/#download-dataset)*
